@@ -3,6 +3,7 @@ import subprocess
 import json
 import os
 import sys
+import socket
 
 SERVERS_BESTAND = "servers.json"
 
@@ -22,13 +23,6 @@ def laad_servers():
     else:
         return []
 
-def laad_servers():
-    if os.path.exists(SERVERS_BESTAND):
-        with open(SERVERS_BESTAND, "r") as f:
-            return json.load(f)
-    else:
-        return []
-
 def verwijder_server(server_naam):
     global servers
     for server in servers:
@@ -41,7 +35,7 @@ def verwijder_server(server_naam):
 
 def sla_server_op(servers):
     with open(SERVERS_BESTAND, "w") as f:
-        json.dump(servers, f, indent=2)
+        json.dump(servers, f, indent=3)
 
 def ping_serv(server):
     param = "-n" if platform.system().lower() == "windows" else "-c"
@@ -54,9 +48,13 @@ def ping_serv(server):
     return status
 
 def voeg_serv_toe(server_naam):
-    servers.append({"naam": server_naam})
-    sla_server_op(servers)
-    print(f"Server {server_naam} is toegevoegd aan de lijst")
+    try:
+        ip_adres = socket.gethostbyname(server_naam)
+        servers.append({"naam": server_naam, "ip_adres": ip_adres})
+        sla_server_op(servers)
+        print(f"Server {server_naam} met IP-adres {ip_adres} is toegevoegd aan de lijst")
+    except socket.gaierror:
+        print(f"Kan geen IP-adres vinden voor server {server_naam}")
 
 while keuze_modi not in (1, 2):
     keuze_modi = int(input("Ongeldige keuze. Probeer opnieuw: (1) management modus, (2) check modus "))
