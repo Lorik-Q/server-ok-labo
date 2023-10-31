@@ -6,6 +6,7 @@ import sys
 import socket
 
 SERVERS_BESTAND = "servers.json"
+PING_LOG_BESTAND = "ping-log.json"
 
 servers = []
 
@@ -45,6 +46,21 @@ def ping_serv(server):
         status = "Bereikbaar"
     else:
         status = "Onbereikbaar"
+
+    # Log de ping-status naar ping-log.json
+    log_entry = {"server": server, "status": status}
+    ping_log = []
+
+    # Lees bestaande logbestand als het bestaat
+    if os.path.exists(PING_LOG_BESTAND):
+        with open(PING_LOG_BESTAND, "r") as log_file:
+            ping_log = json.load(log_file)
+
+    ping_log.append(log_entry)
+
+    # Schrijf de bijgewerkte ping-log naar het bestand
+    with open(PING_LOG_BESTAND, "w") as log_file:
+        json.dump(ping_log, log_file, indent=2)
     return status
 
 def voeg_serv_toe(server_naam):
