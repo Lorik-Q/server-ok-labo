@@ -69,18 +69,15 @@ def ping_serv(server):
     else:
         status = "Onbereikbaar"
 
-    # Log de ping-status naar ping-log.json
     log_entry = {"server": server, "status": status}
     ping_log = []
 
-    # Lees bestaande logbestand als het bestaat
     if os.path.exists(PING_LOG_BESTAND):
         with open(PING_LOG_BESTAND, "r") as log_file:
             ping_log = json.load(log_file)
 
     ping_log.append(log_entry)
 
-    # Schrijf de bijgewerkte ping-log naar het bestand
     with open(PING_LOG_BESTAND, "w") as log_file:
         json.dump(ping_log, log_file, indent=2)
     return status
