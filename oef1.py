@@ -2,7 +2,6 @@ import platform
 import subprocess
 import json
 import os
-import sys
 import socket
 
 SERVERS_BESTAND = "servers.json"
