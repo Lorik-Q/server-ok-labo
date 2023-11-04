@@ -3,14 +3,19 @@ import subprocess
 import json
 import os
 import socket
+import sys
 
 SERVERS_BESTAND = "servers.json"
 PING_LOG_BESTAND = "ping-log.json"
 
 servers = []
 
-keuze_modi = int(input("In welke modus wil je werken: (1) management modus, (2) check modus "))
+if len(sys.argv) != 2:
+    print("Gebruik: python oef1.py <modus>")
+    print("Modus: 1 (management modus) of 2 (check modus)")
+    sys.exit(1)
 
+keuze_modi = int(sys.argv[1])
 
 def laad_servers():
     if os.path.exists(SERVERS_BESTAND):
