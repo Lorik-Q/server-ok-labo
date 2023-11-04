@@ -4,11 +4,29 @@ import json
 import os
 import socket
 import sys
+from jinja2 import Template
+import datetime
 
 SERVERS_BESTAND = "servers.json"
 PING_LOG_BESTAND = "ping-log.json"
+REPORT_BESTAND = "server_report.html"
 
 servers = []
+
+current_time = datetime.datetime.now()
+current_time_str = current_time.strftime("%Y-%m-%d %H:%M:%S")
+
+def genereer_rapport(ping_log, current_time_str):
+    with open('report_template.html') as template_file:
+        template = Template(template_file.read())
+
+    rapport_data = [{"server": entry["server"], "status": entry["status"]} for entry in ping_log]
+
+    rapport_html = template.render(server_entries=rapport_data)
+
+    with open(REPORT_BESTAND, 'w') as rapport_bestand:
+        rapport_bestand.write(rapport_html)
+
 
 if len(sys.argv) != 2:
     print("Gebruik: python oef1.py <modus>")
@@ -103,3 +121,6 @@ elif keuze_modi == 2:
     keuze_ping = input("Welke server wil je pingen? ")
     ping_result = ping_serv(keuze_ping)
     print(f"{keuze_ping} is {ping_result}")
+
+    ping_log = json.load(open(PING_LOG_BESTAND))
+    genereer_rapport(ping_log, current_time_str)

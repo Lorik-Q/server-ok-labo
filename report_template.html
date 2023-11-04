@@ -7,12 +7,18 @@
 </head>
 <body>
     <h1>Servers status report</h1>
-    <h2>Dit report is van: {time}</h2>
+    <h2>Dit rapport is van: {{ current_time_str }}</h2>
     <table>
         <tr>
             <th>Server</th>
             <th>Status</th>
         </tr>
+        {% for entry in server_entries %}
+        <tr>
+            <td>{{ entry.server }}</td>
+            <td>{{ entry.status }}</td>
+        </tr>
+        {% endfor %}
     </table>
 </body>
 </html>

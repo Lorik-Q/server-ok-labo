@@ -2,5 +2,45 @@
   {
     "server": "google.be",
     "status": "Bereikbaar"
+  },
+  {
+    "server": "facebook.com",
+    "status": "Bereikbaar"
+  },
+  {
+    "server": "google.be",
+    "status": "Bereikbaar"
+  },
+  {
+    "server": "facebook.com",
+    "status": "Bereikbaar"
+  },
+  {
+    "server": "faez;",
+    "status": "Onbereikbaar"
+  },
+  {
+    "server": "google.be",
+    "status": "Bereikbaar"
+  },
+  {
+    "server": "youtube.com",
+    "status": "Bereikbaar"
+  },
+  {
+    "server": "google.be",
+    "status": "Bereikbaar"
+  },
+  {
+    "server": "google.be",
+    "status": "Bereikbaar"
+  },
+  {
+    "server": "127.0.0.1",
+    "status": "Bereikbaar"
+  },
+  {
+    "server": "ofninesfs.kum",
+    "status": "Onbereikbaar"
   }
 ]
